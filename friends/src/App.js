@@ -1,7 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import Friends from './components/Friends';
+import Login from './components/Login';
 
 
 function App() {
@@ -15,6 +15,8 @@ function App() {
         </header>
         <Switch>
           <Route exact path='/friends' component={Friends} />
+          <Route path='login' component={Login}/>
+          <Route component={Login}/>
         </Switch>
     </div>
     </Router>
