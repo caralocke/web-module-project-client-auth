@@ -5,7 +5,11 @@ import { AddFriendForm } from './AddFriendForm'
 
 class FriendsList extends React.Component {
     state = {
-        friends: []
+        friends: [{
+            name: '',
+            age:'',
+            email: ''
+        }]
     }
 
     componentDidMount() {
@@ -15,15 +19,28 @@ class FriendsList extends React.Component {
     getData = () => {
         axiosWithAuth().get('http://localhost:5000/api/friends')
             .then(res => {
-                console.log('FriendsList res.data:', res.data)
                 this.setState({
                     ...this.state,
                     friends: res.data
                 })
+                
             })
             .catch(err => {
                 console.log(`Here's where you messed up:\n`, err)
             })
+    }
+
+    addFriend = (friend) => {
+        axiosWithAuth().post('http://localhost:5000/api/friends', friend)
+                        .then(res => {
+                            this.setState({
+                                ...this.state,
+                                friends: res.data
+                            })
+                        })
+                        .catch(err => {
+                            console.log(`Here's where you messed up: `, err)
+                        })
     }
 
     render() {
@@ -34,7 +51,7 @@ class FriendsList extends React.Component {
                        return <Friend key={friend.id} friend={friend} />
                    })
                }
-                <AddFriendForm />
+                <AddFriendForm addFriend={this.addFriend}/>
            </div> 
         )
     }

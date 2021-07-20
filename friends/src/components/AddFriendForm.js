@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
-export const AddFriendForm = () => {
+export const AddFriendForm = (props) => {
+    const { addFriend } = props
     const initialState = {
         name: '',
         age: '',
@@ -10,11 +11,16 @@ export const AddFriendForm = () => {
     const [ newFriend, setNewFriend ] = useState(initialState)
 
     const handleChange = e => {
-
+        setNewFriend({
+            ...newFriend,
+            [e.target.name]: e.target.value
+        })
     }
 
     const handleSubmit = e => {
-        
+        e.preventDefault()
+        console.log('newFriend:', newFriend)
+        addFriend(newFriend)
     }
 
     return(
